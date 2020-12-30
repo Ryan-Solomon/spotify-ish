@@ -1,14 +1,20 @@
 import React from 'react';
-import { Album } from '../components/Album';
 import styled from 'styled-components/native';
 import { AlbumCategory } from '../components/AlbumCategory';
 import albumData from '../assets/data/albumCategories';
-const { id, title, albums } = albumData[0];
+import { FlatList } from 'react-native';
 
 export default function HomeScreen() {
   return (
     <SHomeContainer>
-      <AlbumCategory id={id} title={title} albums={albums} />
+      <FlatList
+        data={albumData}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          const { id, title, albums } = item;
+          return <AlbumCategory id={id} title={title} albums={albums} />;
+        }}
+      />
     </SHomeContainer>
   );
 }
