@@ -11,7 +11,7 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
+import HomeScreen from '../screens/HomeScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 
@@ -96,9 +96,9 @@ function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
-        name='TabOneScreen'
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        name='Home'
+        component={HomeScreen}
+        options={{ headerTitle: 'Home' }}
       />
     </TabOneStack.Navigator>
   );
