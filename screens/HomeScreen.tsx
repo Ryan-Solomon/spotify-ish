@@ -1,9 +1,17 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/built-in-components/EditScreenInfo';
-import { Text, View } from '../components/built-in-components/Themed';
+import React from 'react';
+import { Album } from '../components/Album';
+import styled from 'styled-components/native';
 
 export default function TabOneScreen() {
-  return <Text>Home</Text>;
+  return (
+    <SHomeContainer>
+      <Album />
+    </SHomeContainer>
+  );
 }
+
+const SHomeContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
