@@ -17,8 +17,8 @@ export const Album: FC<Partial<TProps>> = ({
 }) => {
   return (
     <SAlbumContainer>
-      <Image style={styles.backgroundImage} source={imageUri} />
-      <SAlbumText>{artistsHeadline}</SAlbumText>
+      <Image style={styles.backgroundImage} source={DefaultImage} />
+      <SAlbumText numberOfLines={2}>{artistsHeadline}</SAlbumText>
     </SAlbumContainer>
   );
 };
@@ -30,6 +30,7 @@ const SAlbumContainer = styled.View`
   height: 250px;
   padding: 10px;
   background-color: #222;
+  margin: 10px;
 `;
 
 const SAlbumText = styled.Text`

@@ -40,4 +40,5 @@ const SAlbumCategoryContainer = styled.View``;
 const STitle = styled.Text`
   font-size: 30px;
   color: #dadada;
+  margin: 10px;
 `;

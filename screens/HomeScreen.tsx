@@ -5,7 +5,7 @@ import { AlbumCategory } from '../components/AlbumCategory';
 import albumData from '../assets/data/albumCategories';
 const { id, title, albums } = albumData[0];
 
-export default function TabOneScreen() {
+export default function HomeScreen() {
   return (
     <SHomeContainer>
       <AlbumCategory id={id} title={title} albums={albums} />
