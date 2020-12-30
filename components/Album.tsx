@@ -5,19 +5,19 @@ import styled from 'styled-components/native';
 const DefaultImage = require('../assets/images/album-cover-1.jpg');
 
 type TProps = {
-  albumID: string;
-  imageURI: string;
+  id: string;
+  imageUri: string;
   artistsHeadline: string;
 };
 
 export const Album: FC<Partial<TProps>> = ({
-  albumID,
-  imageURI = DefaultImage,
+  id,
+  imageUri = DefaultImage,
   artistsHeadline = 'Mumford & Sons, X Ambassadors, and more',
 }) => {
   return (
     <SAlbumContainer>
-      <Image style={styles.backgroundImage} source={imageURI} />
+      <Image style={styles.backgroundImage} source={imageUri} />
       <SAlbumText>{artistsHeadline}</SAlbumText>
     </SAlbumContainer>
   );
