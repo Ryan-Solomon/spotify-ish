@@ -33,6 +33,8 @@ export const AlbumCategory: FC<TProps> = ({ title, albums }) => {
   );
 };
 
+// Styles
+
 const SAlbumCategoryContainer = styled.View``;
 
 const STitle = styled.Text`
