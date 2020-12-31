@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
@@ -15,10 +16,21 @@ export const Album: FC<Partial<TProps>> = ({
   imageUri = DefaultImage,
   artistsHeadline = 'Mumford & Sons, X Ambassadors, and more',
 }) => {
+  const navigation = useNavigation();
+
+  const onPress = () => {
+    navigation.navigate('Album Screen');
+  };
+
   return (
     <SAlbumContainer>
-      <Image style={styles.backgroundImage} source={DefaultImage} />
-      <SAlbumText numberOfLines={2}>{artistsHeadline}</SAlbumText>
+      <STouchableContainer>
+        {/* Wrapped in a fragment bc touchable opacity can just have one child */}
+        <>
+          <Image style={styles.backgroundImage} source={DefaultImage} />
+          <SAlbumText numberOfLines={2}>{artistsHeadline}</SAlbumText>
+        </>
+      </STouchableContainer>
     </SAlbumContainer>
   );
 };
@@ -37,6 +49,8 @@ const SAlbumText = styled.Text`
   margin-top: 10px;
   color: grey;
 `;
+
+const STouchableContainer = styled.TouchableWithoutFeedback``;
 
 const styles = StyleSheet.create({
   backgroundImage: {
