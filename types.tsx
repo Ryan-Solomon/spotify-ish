@@ -24,3 +24,10 @@ export type TAlbum = {
   imageUri: string;
   artistsHeadline: string;
 };
+
+export type Song = {
+  id: string;
+  imageUri: string;
+  title: string;
+  artist: string;
+};
