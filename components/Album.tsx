@@ -19,19 +19,16 @@ export const Album: FC<Partial<TProps>> = ({
   const navigation = useNavigation();
 
   const onPress = () => {
-    navigation.navigate('Album Screen');
+    navigation.navigate('AlbumScreen', { id });
   };
 
   return (
-    <SAlbumContainer>
-      <STouchableContainer>
-        {/* Wrapped in a fragment bc touchable opacity can just have one child */}
-        <>
-          <Image style={styles.backgroundImage} source={DefaultImage} />
-          <SAlbumText numberOfLines={2}>{artistsHeadline}</SAlbumText>
-        </>
-      </STouchableContainer>
-    </SAlbumContainer>
+    <STouchableContainer onPress={onPress}>
+      <SAlbumContainer>
+        <Image style={styles.backgroundImage} source={DefaultImage} />
+        <SAlbumText numberOfLines={2}>{artistsHeadline}</SAlbumText>
+      </SAlbumContainer>
+    </STouchableContainer>
   );
 };
 

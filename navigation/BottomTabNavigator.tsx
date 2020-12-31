@@ -11,6 +11,7 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+import { AlbumScreen } from '../screens/AlbumScreen';
 import HomeScreen from '../screens/HomeScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
@@ -85,11 +86,6 @@ export default function BottomTabNavigator() {
   );
 }
 
-function TabBarIcon(props: { name: string; color: string }) {
-  // @ts-ignore
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-}
-
 const TabOneStack = createStackNavigator<TabOneParamList>();
 
 function TabOneNavigator() {
@@ -99,6 +95,11 @@ function TabOneNavigator() {
         name='Home'
         component={HomeScreen}
         options={{ headerTitle: 'Home' }}
+      />
+      <TabOneStack.Screen
+        name='AlbumScreen'
+        component={AlbumScreen}
+        options={{ headerTitle: 'Album' }}
       />
     </TabOneStack.Navigator>
   );
