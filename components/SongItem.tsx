@@ -22,10 +22,18 @@ export const SongItem: FC<TProps> = ({ song: { imageUri, artist, title } }) => {
   );
 };
 
+// Styles
+
 const SContainer = styled.View``;
 const SImageContainer = styled.View``;
 const STextContainer = styled.View``;
 
-const SText = styled.Text`
-  color: white;
+type STextProps = {
+  fontSize: string;
+  fontColor: string;
+};
+
+const SText = styled.Text<Partial<STextProps>>`
+  font-size: ${({ fontSize }) => fontSize || '16px'};
+  color: ${({ fontColor }) => fontColor || 'white'};
 `;
