@@ -1,5 +1,3 @@
-import { ImageSourcePropType } from 'react-native';
-
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
@@ -29,7 +27,7 @@ export type TAlbum = {
 
 export type TSong = {
   id: string;
-  imageUri: ImageSourcePropType;
+  imageUri: string;
   title: string;
   artist: string;
 };
