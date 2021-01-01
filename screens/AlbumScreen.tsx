@@ -5,6 +5,7 @@ import { View, Text, FlatList } from 'react-native';
 import styled from 'styled-components/native';
 import { SongItem } from '../components/SongItem';
 import { TSong } from '../types';
+import { AlbumHeader } from './../components/AlbumHeader';
 const DefaultImage = require('../assets/images/album-cover-1.jpg');
 
 const songs: TSong[] = [
@@ -67,6 +68,7 @@ export const AlbumScreen = () => {
         renderItem={({ item }) => {
           return <SongItem song={item} />;
         }}
+        ListHeaderComponent={AlbumHeader}
       />
     </SContainer>
   );
