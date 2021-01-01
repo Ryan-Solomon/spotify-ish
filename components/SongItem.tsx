@@ -14,8 +14,8 @@ export const SongItem: FC<TProps> = ({ song: { imageUri, artist, title } }) => {
         <Image style={styles.image} source={imageUri as ImageSourcePropType} />
       </SImageContainer>
       <STextContainer>
-        <SText fontSize='22px'>{title}</SText>
-        <SText fontColor='#dadada' fontSize='14px'>
+        <SText fontSize='18px'>{title}</SText>
+        <SText fontColor='#dadada' fontSize='12px'>
           {artist}
         </SText>
       </STextContainer>
@@ -27,8 +27,8 @@ export const SongItem: FC<TProps> = ({ song: { imageUri, artist, title } }) => {
 
 const styles = StyleSheet.create({
   image: {
-    width: 75,
-    height: 75,
+    width: 55,
+    height: 55,
     resizeMode: 'cover',
   },
 });
