@@ -6,55 +6,55 @@ import { Image, ImageSourcePropType, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
-import {Audio} from 'expo-av'
+import { Audio } from 'expo-av';
 import { Sound } from 'expo-av/build/Audio';
 
 const DefaultImage = require('../assets/images/album-cover-1.jpg');
 
 const song: TSong = {
-    id: '1',
-    uri: '',
+  id: '1',
+  uri: '',
   imageUri: DefaultImage,
   artist: 'Taylor Swift',
   title: 'Willow',
 };
 
 export const PlayerWidget = () => {
+  const [sound, setSound] = useState<Sound | null>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
 
-    const [sound, setSound] = useState<Sound | null>(null)
-    const [isPlaying, setIsPlaying] = useState(true)
+  const { imageUri, artist, title, uri } = song;
+  const onPlayBackStatusUpdate = (status: any) => {
+    console.log(status);
+  };
 
-    const { imageUri, artist, title, uri } = song;
-    const onPlayBackStatusUpdate = (status: any) => {
-        console.log(status)
+  const playCurrentSong = async () => {
+    if (sound) {
+      await sound.unloadAsync();
     }
+    // const { sound: newSound } = await Sound.createAsync(
 
-    const playCurrentSong = async () => {
-        if (sound) {
-            await sound.unloadAsync();
-        }
-        const { sound: newSound } = await Sound.createAsync(
-            source: { uri },
-            initialStatus: { shouldPlay: isPlaying },
-            onPlayBackStatusUpdate
-        )
-        setSound(newSound)
-        
+    //     source: { uri },
+
+    //     initialStatus: { shouldPlay: isPlaying },
+    //     onPlayBackStatusUpdate
+    // )
+    // setSound(newSound)
+  };
+
+  useEffect(() => {
+    [];
+  });
+
+  const onPlayPausePress = async () => {
+    if (!sound) return;
+    if (isPlaying) {
+      await sound.stopAsync();
+    } else {
+      await sound.playAsync();
     }
-
-    useEffect(() => {
-
-    []})
-    
-    const onPlayPausePress = async () => {
-        if (!sound) return;
-        if (isPlaying) {
-            await sound.stopAsync()
-        } else {
-            await sound.playAsync()
-        }
-        setIsPlaying(!isPlaying)
-    }
+    setIsPlaying(!isPlaying);
+  };
 
   return (
     <SContainer>
@@ -68,11 +68,14 @@ export const PlayerWidget = () => {
         </SText>
       </STextContainer>
       <SIconContainer>
-              <AntDesign name='hearto' size={30} color='white' />
-              <STouchableOpacity onPress={onPlayPausePress} >
-
-        <Entypo name='controller-play' size={30} color='white' />
-              </STouchableOpacity>
+        <AntDesign name='hearto' size={30} color='white' />
+        <STouchableOpacity onPress={onPlayPausePress}>
+          {isPlaying ? (
+            <AntDesign name='pause' size={24} color='black' />
+          ) : (
+            <Entypo name='controller-play' size={30} color='white' />
+          )}
+        </STouchableOpacity>
       </SIconContainer>
     </SContainer>
   );
@@ -100,7 +103,7 @@ const SContainer = styled.View`
   align-items: center;
 `;
 
-const STouchableOpacity = styled.TouchableOpacity``
+const STouchableOpacity = styled.TouchableOpacity``;
 
 const SIconContainer = styled.View`
   flex-direction: row;
