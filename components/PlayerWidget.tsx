@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import styled from 'styled-components/native';
 import { TSong } from '../types';
@@ -6,17 +6,42 @@ import { Image, ImageSourcePropType, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
+import {Audio} from 'expo-av'
+import { Sound } from 'expo-av/build/Audio';
+
 const DefaultImage = require('../assets/images/album-cover-1.jpg');
 
 const song: TSong = {
-  id: '1',
+    id: '1',
+    uri: '',
   imageUri: DefaultImage,
   artist: 'Taylor Swift',
   title: 'Willow',
 };
 
 export const PlayerWidget = () => {
-  const { imageUri, artist, title } = song;
+
+    const [sound, setSound] = useState<Sound | null>(null)
+
+    const { imageUri, artist, title, uri } = song;
+    const onPlayBackStatusUpdate = (status: any) => {
+        console.log(status)
+    }
+
+    const playCurrentSong = async () => {
+        const { sound } = await Sound.createAsync(
+            source: { uri },
+            initialStatus: { shouldPlay: true },
+            onPlayBackStatusUpdate
+        )
+        
+    }
+
+    useEffect(() => {
+
+    []})
+    
+
   return (
     <SContainer>
       <SImageContainer>

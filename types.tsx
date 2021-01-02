@@ -27,6 +27,7 @@ export type TAlbum = {
 
 export type TSong = {
   id: string;
+  uri: string;
   imageUri: string;
   title: string;
   artist: string;
