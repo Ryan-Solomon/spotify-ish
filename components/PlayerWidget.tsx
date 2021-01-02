@@ -50,7 +50,7 @@ const SContainer = styled.View`
   flex-direction: row;
   padding: 6px;
   position: absolute;
-  bottom: 0px;
+  bottom: 46px;
   background-color: #181818;
   width: 100%;
   border-bottom-width: 2px;
