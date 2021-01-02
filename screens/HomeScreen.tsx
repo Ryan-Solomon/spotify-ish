@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import { AlbumCategory } from '../components/AlbumCategory';
 import albumData from '../assets/data/albumCategories';
 import { FlatList } from 'react-native';
+import { PlayerWidget } from '../components/PlayerWidget';
 
 export default function HomeScreen() {
   return (
@@ -15,6 +16,7 @@ export default function HomeScreen() {
           return <AlbumCategory id={id} title={title} albums={albums} />;
         }}
       />
+      <PlayerWidget />
     </SHomeContainer>
   );
 }
