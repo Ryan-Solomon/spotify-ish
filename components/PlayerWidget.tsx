@@ -10,10 +10,11 @@ import { Audio } from 'expo-av';
 import { Sound } from 'expo-av/build/Audio';
 
 const DefaultImage = require('../assets/images/album-cover-1.jpg');
+const music = require('../assets/music/Fog_Lake_-_04_-_kerosene.mp3');
 
 const song: TSong = {
   id: '1',
-  uri: '',
+  uri: music,
   imageUri: DefaultImage,
   artist: 'Taylor Swift',
   title: 'Willow',
@@ -22,9 +23,14 @@ const song: TSong = {
 export const PlayerWidget = () => {
   const [sound, setSound] = useState<Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
-
+  const [duration, setDuration] = useState<number | null>(null);
+  const [position, setPosition] = useState<number | null>(null);
   const { imageUri, artist, title, uri } = song;
   const onPlayBackStatusUpdate = (status: any) => {
+    setIsPlaying(status.isPlaying);
+    setDuration(status.durationMillis);
+    setPosition(status.positionMillis);
+
     console.log(status);
   };
 
@@ -32,14 +38,13 @@ export const PlayerWidget = () => {
     if (sound) {
       await sound.unloadAsync();
     }
-    // const { sound: newSound } = await Sound.createAsync(
+    const { sound: newSound } = await Sound.createAsync(
+      { uri },
 
-    //     source: { uri },
-
-    //     initialStatus: { shouldPlay: isPlaying },
-    //     onPlayBackStatusUpdate
-    // )
-    // setSound(newSound)
+      { shouldPlay: isPlaying },
+      onPlayBackStatusUpdate
+    );
+    setSound(newSound);
   };
 
   useEffect(() => {
@@ -49,11 +54,15 @@ export const PlayerWidget = () => {
   const onPlayPausePress = async () => {
     if (!sound) return;
     if (isPlaying) {
-      await sound.stopAsync();
+      await sound?.stopAsync();
     } else {
-      await sound.playAsync();
+      await sound?.playAsync();
     }
-    setIsPlaying(!isPlaying);
+  };
+
+  const getProgress = () => {
+    if (sound === null || duration === null || position === null) return 0;
+    return (position / duration) * 100;
   };
 
   return (
@@ -71,7 +80,7 @@ export const PlayerWidget = () => {
         <AntDesign name='hearto' size={30} color='white' />
         <STouchableOpacity onPress={onPlayPausePress}>
           {isPlaying ? (
-            <AntDesign name='pause' size={24} color='black' />
+            <AntDesign name='pause' size={30} color='white' />
           ) : (
             <Entypo name='controller-play' size={30} color='white' />
           )}
