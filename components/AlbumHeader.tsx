@@ -13,6 +13,9 @@ export const AlbumHeader: FC = ({}) => {
       <SText fontSize='14px' fontColor='grey'>
         By Spotify 124 likes
       </SText>
+      <SBtn>
+        <SText fontSize='16px'>PLAY</SText>
+      </SBtn>
     </SAlbumHeaderContainer>
   );
 };
@@ -21,13 +24,17 @@ export const AlbumHeader: FC = ({}) => {
 
 const styles = StyleSheet.create({
   image: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     resizeMode: 'cover',
+    marginVertical: 10,
   },
 });
 
-const SAlbumHeaderContainer = styled.View``;
+const SAlbumHeaderContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+`;
 
 type STextProps = {
   fontSize: string;
@@ -38,4 +45,13 @@ const SText = styled.Text<Partial<STextProps>>`
   font-size: ${({ fontSize }) => fontSize || '16px'};
   color: ${({ fontColor }) => fontColor || 'white'};
   margin: 3px 0;
+`;
+
+const SBtn = styled.TouchableOpacity`
+  background-color: #2c912c;
+  padding: 6px;
+  border-radius: 15px;
+  width: 150px;
+  align-items: center;
+  margin-top: 10px;
 `;
