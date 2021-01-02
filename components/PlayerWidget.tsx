@@ -22,6 +22,7 @@ const song: TSong = {
 export const PlayerWidget = () => {
 
     const [sound, setSound] = useState<Sound | null>(null)
+    const [isPlaying, setIsPlaying] = useState(true)
 
     const { imageUri, artist, title, uri } = song;
     const onPlayBackStatusUpdate = (status: any) => {
@@ -29,11 +30,15 @@ export const PlayerWidget = () => {
     }
 
     const playCurrentSong = async () => {
-        const { sound } = await Sound.createAsync(
+        if (sound) {
+            await sound.unloadAsync();
+        }
+        const { sound: newSound } = await Sound.createAsync(
             source: { uri },
-            initialStatus: { shouldPlay: true },
+            initialStatus: { shouldPlay: isPlaying },
             onPlayBackStatusUpdate
         )
+        setSound(newSound)
         
     }
 
@@ -41,6 +46,15 @@ export const PlayerWidget = () => {
 
     []})
     
+    const onPlayPausePress = async () => {
+        if (!sound) return;
+        if (isPlaying) {
+            await sound.stopAsync()
+        } else {
+            await sound.playAsync()
+        }
+        setIsPlaying(!isPlaying)
+    }
 
   return (
     <SContainer>
