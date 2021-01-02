@@ -68,8 +68,11 @@ export const PlayerWidget = () => {
         </SText>
       </STextContainer>
       <SIconContainer>
-        <AntDesign name='hearto' size={30} color='white' />
+              <AntDesign name='hearto' size={30} color='white' />
+              <STouchableOpacity onPress={onPlayPausePress} >
+
         <Entypo name='controller-play' size={30} color='white' />
+              </STouchableOpacity>
       </SIconContainer>
     </SContainer>
   );
@@ -96,6 +99,8 @@ const SContainer = styled.View`
   border-color: black;
   align-items: center;
 `;
+
+const STouchableOpacity = styled.TouchableOpacity``
 
 const SIconContainer = styled.View`
   flex-direction: row;
