@@ -48,7 +48,7 @@ const SText = styled.Text<Partial<STextProps>>`
 `;
 
 const SBtn = styled.TouchableOpacity`
-  background-color: #2c912c;
+  background-color: #599e59;
   padding: 6px;
   border-radius: 15px;
   width: 150px;
