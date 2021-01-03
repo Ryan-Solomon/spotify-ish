@@ -54,9 +54,9 @@ export const PlayerWidget = () => {
   const onPlayPausePress = async () => {
     if (!sound) return;
     if (isPlaying) {
-      await sound?.stopAsync();
+      await sound.stopAsync();
     } else {
-      await sound?.playAsync();
+      await sound.playAsync();
     }
   };
 
