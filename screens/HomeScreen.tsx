@@ -24,7 +24,8 @@ export default function HomeScreen() {
   return (
     <SHomeContainer>
       <FlatList
-        data={albumData}
+        data={categories}
+        // @ts-ignore
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           const { id, title, albums } = item;
