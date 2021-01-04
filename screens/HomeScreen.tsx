@@ -17,7 +17,6 @@ export default function HomeScreen() {
           graphqlOperation(listAlbumCategorys)
         );
         setCategories(data.listAlbumCategorys.items as TAlbumCategory[]);
-        // console.log(data.listAlbumCategorys.items);
       } catch {}
     };
     fetchAlbumCategories();

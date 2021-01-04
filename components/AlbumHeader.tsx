@@ -2,16 +2,25 @@ import React, { FC } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 
-export const AlbumHeader: FC = ({}) => {
+export type TAlbum = {
+  album: {
+    by: string;
+    id: string;
+    imageUri: string;
+    name: string;
+    numberOfLikes: string;
+  };
+};
+
+export const AlbumHeader: FC<TAlbum> = ({
+  album: { by, id, imageUri, name, numberOfLikes },
+}) => {
   return (
     <SAlbumHeaderContainer>
-      <Image
-        source={require('../assets/images/album-cover-1.jpg')}
-        style={styles.image}
-      />
-      <SText fontSize='22px'>Workout</SText>
+      <Image source={{ uri: imageUri }} style={styles.image} />
+      <SText fontSize='22px'>{name}</SText>
       <SText fontSize='14px' fontColor='grey'>
-        By Spotify 124 likes
+        By {by} {numberOfLikes} likes
       </SText>
       <SBtn>
         <SText fontSize='16px'>PLAY</SText>

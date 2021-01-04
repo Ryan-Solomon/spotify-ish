@@ -8,8 +8,9 @@ import styled from 'styled-components/native';
 import { SongItem } from '../components/SongItem';
 import { TSong } from '../types';
 import { AlbumHeader } from './../components/AlbumHeader';
+import { TAlbum } from '../components/AlbumHeader';
 
-type TRoute = {
+export type TRoute = {
   key: string;
   name: string;
   params: {
@@ -22,6 +23,7 @@ type TStatus = 'PENDING' | 'IDLE' | 'FULFILLED' | 'ERROR';
 export const AlbumScreen = () => {
   const [songs, setSongs] = useState<TSong[]>([]);
   const [status, setStatus] = useState<TStatus>('IDLE');
+  const [album, setAlbum] = useState<TAlbum | null>(null);
   const {
     params: { id: albumId },
   } = useRoute<TRoute>();
@@ -35,6 +37,7 @@ export const AlbumScreen = () => {
         )) as any;
         setStatus('FULFILLED');
         setSongs(songData.data.getAlbum.songs.items as TSong[]);
+        setAlbum(songData.data.getAlbum as TAlbum);
       } catch (e) {
         setStatus('ERROR');
       }
@@ -45,6 +48,7 @@ export const AlbumScreen = () => {
   if (status === 'PENDING') return <SText>Loading...</SText>;
   // Todo -- Redirect to an actual error page
   if (status === 'ERROR') return <SText>Oops, something went wrong</SText>;
+  if (!album) return null;
 
   return (
     <SContainer>
@@ -54,7 +58,8 @@ export const AlbumScreen = () => {
         renderItem={({ item }) => {
           return <SongItem song={item} />;
         }}
-        ListHeaderComponent={AlbumHeader}
+        // @ts-ignore
+        ListHeaderComponent={() => <AlbumHeader album={album} />}
       />
     </SContainer>
   );
