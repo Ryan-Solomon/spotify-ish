@@ -23,10 +23,13 @@ export const PlayerWidget = () => {
   const [sound, setSound] = useState<Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [duration, setDuration] = useState<number | null>(null);
-  const [postition, setPostition] = useState<number | null>(null);
+  const [position, setPosition] = useState<number | null>(null);
   const { id, imageUri, uri, title, artist } = song;
 
-  const onPlaybackStatusUpdate = (status: any) => console.log(status);
+  const onPlaybackStatusUpdate = (status: any) => {
+    setDuration(status.durationMillis);
+    setPosition(status.positionMillis);
+  };
 
   const playCurrentSong = async () => {
     if (sound) {
@@ -56,8 +59,14 @@ export const PlayerWidget = () => {
     }
   };
 
+  const getProgress = () => {
+    if (sound === null || duration === null || position === null) return 0;
+    return (position / duration) * 100;
+  };
+
   return (
     <SContainer>
+      <SProgressBar width={`${getProgress()}`} />
       <SImageContainer>
         <Image style={styles.image} source={{ uri: imageUri }} />
       </SImageContainer>
@@ -130,4 +139,16 @@ const SText = styled.Text<Partial<STextProps>>`
   font-size: ${({ fontSize }) => fontSize || '16px'};
   color: ${({ fontColor }) => fontColor || 'white'};
   margin: 3px 0;
+`;
+
+type TProgressBarProps = {
+  width: string;
+};
+
+const SProgressBar = styled.View<TProgressBarProps>`
+  width: ${({ width }) => `${width}%`};
+  height: 3px;
+  background-color: white;
+  position: absolute;
+  top: 0;
 `;
