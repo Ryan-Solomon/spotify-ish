@@ -22,7 +22,10 @@ const song = {
 export const PlayerWidget = () => {
   const [sound, setSound] = useState<Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [duration, setDuration] = useState<number | null>(null);
+  const [postition, setPostition] = useState<number | null>(null);
   const { id, imageUri, uri, title, artist } = song;
+
   const onPlaybackStatusUpdate = (status: any) => console.log(status);
 
   const playCurrentSong = async () => {
@@ -108,7 +111,7 @@ const SIconContainer = styled.View`
   margin-right: 10px;
   padding: 5px;
   justify-content: space-between;
-  width: 86px;
+  width: 90px;
 `;
 
 const SImageContainer = styled.View`
