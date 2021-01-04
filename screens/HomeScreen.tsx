@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { AlbumCategory } from '../components/AlbumCategory';
 import albumData from '../assets/data/albumCategories';
@@ -7,13 +7,18 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { listAlbumCategorys } from '../graphql/queries';
 
 export default function HomeScreen() {
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchAlbumCategories = async () => {
       try {
-        const data = await API.graphql(graphqlOperation(listAlbumCategorys));
-        console.log(data);
+        // @ts-ignore
+        const { data } = await API.graphql(
+          graphqlOperation(listAlbumCategorys)
+        );
+        setCategories(data);
       } catch {}
     };
+    fetchAlbumCategories();
   }, []);
 
   return (
