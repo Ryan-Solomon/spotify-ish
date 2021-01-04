@@ -1,51 +1,13 @@
 import { useRoute } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
+import { API, graphqlOperation } from 'aws-amplify';
+import { getAlbum } from '../graphql/queries';
 
 import styled from 'styled-components/native';
 import { SongItem } from '../components/SongItem';
 import { TSong } from '../types';
 import { AlbumHeader } from './../components/AlbumHeader';
-const DefaultImage = require('../assets/images/album-cover-1.jpg');
-
-const songs: TSong[] = [
-  {
-    id: '1',
-    imageUri: DefaultImage,
-    artist: 'Taylor Swift',
-    title: 'Willow',
-  },
-  {
-    id: '2',
-    imageUri: DefaultImage,
-    artist: 'Taylor Swift',
-    title: 'Willow',
-  },
-  {
-    id: '3',
-    imageUri: DefaultImage,
-    artist: 'Taylor Swift',
-    title: 'Willow',
-  },
-  {
-    id: '4',
-    imageUri: DefaultImage,
-    artist: 'Taylor Swift',
-    title: 'Willow',
-  },
-  {
-    id: '5',
-    imageUri: DefaultImage,
-    artist: 'Taylor Swift',
-    title: 'Willow',
-  },
-  {
-    id: '6',
-    imageUri: DefaultImage,
-    artist: 'Taylor Swift',
-    title: 'Willow',
-  },
-];
 
 type TRoute = {
   key: string;
@@ -55,11 +17,31 @@ type TRoute = {
   };
 };
 
+type TStatus = 'PENDING' | 'IDLE' | 'FULFILLED' | 'ERROR';
+
 export const AlbumScreen = () => {
+  const [songs, setSongs] = useState();
+  const [status, setStatus] = useState<TStatus>('IDLE');
   const {
-    params: { id },
+    params: { id: albumId },
   } = useRoute<TRoute>();
-  console.log(id);
+
+  useEffect(() => {
+    const getAlbumSongs = async () => {
+      setStatus('PENDING');
+      try {
+        const songData = await API.graphql(
+          graphqlOperation(getAlbum, { id: albumId })
+        );
+        setStatus('FULFILLED');
+        console.log(songData);
+      } catch (e) {
+        setStatus('ERROR');
+      }
+    };
+    getAlbumSongs();
+  }, []);
+
   return (
     <SContainer>
       <FlatList

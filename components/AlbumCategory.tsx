@@ -11,8 +11,6 @@ export type TAlbumCategory = {
 };
 
 export const AlbumCategory: FC<TAlbumCategory> = ({ title, albums }) => {
-  console.log('__________________________________________');
-  console.log(albums);
   return (
     <SAlbumCategoryContainer>
       <STitle>{title}</STitle>
