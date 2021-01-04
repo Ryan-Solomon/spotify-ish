@@ -11,7 +11,7 @@ export const SongItem: FC<TProps> = ({ song: { imageUri, artist, title } }) => {
   return (
     <SContainer>
       <SImageContainer>
-        <Image style={styles.image} source={imageUri as ImageSourcePropType} />
+        <Image style={styles.image} source={{ uri: imageUri }} />
       </SImageContainer>
       <STextContainer>
         <SText fontSize='18px'>{title}</SText>
