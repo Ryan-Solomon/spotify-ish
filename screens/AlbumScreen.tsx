@@ -34,7 +34,6 @@ export const AlbumScreen = () => {
           graphqlOperation(getAlbum, { id: albumId })
         )) as any;
         setStatus('FULFILLED');
-        console.log(songData.data.getAlbum.songs.items);
         setSongs(songData.data.getAlbum.songs.items as TSong[]);
       } catch (e) {
         setStatus('ERROR');
@@ -42,6 +41,10 @@ export const AlbumScreen = () => {
     };
     getAlbumSongs();
   }, []);
+
+  if (status === 'PENDING') return <SText>Loading...</SText>;
+  // Todo -- Redirect to an actual error page
+  if (status === 'ERROR') return <SText>Oops, something went wrong</SText>;
 
   return (
     <SContainer>
