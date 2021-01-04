@@ -20,7 +20,7 @@ type TRoute = {
 type TStatus = 'PENDING' | 'IDLE' | 'FULFILLED' | 'ERROR';
 
 export const AlbumScreen = () => {
-  const [songs, setSongs] = useState();
+  const [songs, setSongs] = useState<TSong[]>([]);
   const [status, setStatus] = useState<TStatus>('IDLE');
   const {
     params: { id: albumId },
@@ -30,11 +30,12 @@ export const AlbumScreen = () => {
     const getAlbumSongs = async () => {
       setStatus('PENDING');
       try {
-        const songData = await API.graphql(
+        const songData = (await API.graphql(
           graphqlOperation(getAlbum, { id: albumId })
-        );
+        )) as any;
         setStatus('FULFILLED');
-        console.log(songData);
+        console.log(songData.data.getAlbum.songs.items);
+        setSongs(songData.data.getAlbum.songs.items as TSong[]);
       } catch (e) {
         setStatus('ERROR');
       }
