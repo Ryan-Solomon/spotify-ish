@@ -10,6 +10,7 @@ import Navigation from './navigation';
 import Amplify from 'aws-amplify';
 // @ts-ignore
 import config from './aws-exports';
+import { AppProvider } from './context/appContext';
 Amplify.configure(config);
 
 export default function App() {
@@ -21,9 +22,11 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-        <PlayerWidget />
+        <AppProvider>
+          <Navigation colorScheme={colorScheme} />
+          <StatusBar />
+          <PlayerWidget />
+        </AppProvider>
       </SafeAreaProvider>
     );
   }
