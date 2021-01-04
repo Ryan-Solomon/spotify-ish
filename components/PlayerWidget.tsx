@@ -9,66 +9,54 @@ import { Entypo } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { Sound } from 'expo-av/build/Audio';
 
-const DefaultImage = require('../assets/images/album-cover-1.jpg');
-const music = require('../assets/music/Fog_Lake_-_04_-_kerosene.mp3');
-
-const song: TSong = {
+const song = {
   id: '1',
-  uri: music,
-  imageUri: DefaultImage,
-  artist: 'Taylor Swift',
-  title: 'Willow',
+  imageUri:
+    'https://spotify-app-songs.s3.amazonaws.com/hao-wang-pVq6YhmDPtk-unsplash.jpg',
+  uri:
+    'https://spotify-app-songs.s3.amazonaws.com/Black_Ant_-_01_-_Fater_Lee.mp3',
+  title: 'some title',
+  artist: 'some artist',
 };
 
 export const PlayerWidget = () => {
   const [sound, setSound] = useState<Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [duration, setDuration] = useState<number | null>(null);
-  const [position, setPosition] = useState<number | null>(null);
-  const { imageUri, artist, title, uri } = song;
-  const onPlayBackStatusUpdate = (status: any) => {
-    setIsPlaying(status.isPlaying);
-    setDuration(status.durationMillis);
-    setPosition(status.positionMillis);
-
-    console.log(status);
-  };
+  const { id, imageUri, uri, title, artist } = song;
+  const onPlaybackStatusUpdate = (status: any) => console.log(status);
 
   const playCurrentSong = async () => {
     if (sound) {
       await sound.unloadAsync();
     }
-    const { sound: newSound } = await Sound.createAsync(
-      { uri },
 
+    const { sound: newSound } = await Audio.Sound.createAsync(
+      { uri },
       { shouldPlay: isPlaying },
-      onPlayBackStatusUpdate
+      onPlaybackStatusUpdate
     );
     setSound(newSound);
   };
 
   useEffect(() => {
-    [];
-  });
+    playCurrentSong();
+  }, []);
 
   const onPlayPausePress = async () => {
     if (!sound) return;
     if (isPlaying) {
       await sound.stopAsync();
+      setIsPlaying(false);
     } else {
       await sound.playAsync();
+      setIsPlaying(true);
     }
-  };
-
-  const getProgress = () => {
-    if (sound === null || duration === null || position === null) return 0;
-    return (position / duration) * 100;
   };
 
   return (
     <SContainer>
       <SImageContainer>
-        <Image style={styles.image} source={imageUri as ImageSourcePropType} />
+        <Image style={styles.image} source={{ uri: imageUri }} />
       </SImageContainer>
       <STextContainer>
         <SText fontSize='18px'>{title}</SText>
