@@ -15,7 +15,8 @@ export default function HomeScreen() {
         const { data } = await API.graphql(
           graphqlOperation(listAlbumCategorys)
         );
-        setCategories(data);
+        setCategories(data.listAlbumCategorys.items);
+        console.log(data.listAlbumCategorys.items);
       } catch {}
     };
     fetchAlbumCategories();
@@ -23,15 +24,20 @@ export default function HomeScreen() {
 
   return (
     <SHomeContainer>
-      <FlatList
-        data={categories}
-        // @ts-ignore
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          const { id, title, albums } = item;
-          return <AlbumCategory id={id} title={title} albums={albums} />;
-        }}
-      />
+      {categories?.length > 0 && (
+        <FlatList
+          data={categories}
+          // @ts-ignore
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => {
+            const { id, title, albums } = item;
+            return (
+              // @ts-ignore
+              <AlbumCategory id={id} title={title} albums={albums.items} />
+            );
+          }}
+        />
+      )}
     </SHomeContainer>
   );
 }
