@@ -4,13 +4,15 @@ import styled from 'styled-components/native';
 import { TAlbum } from '../types';
 import { Album } from './Album';
 
-type TProps = {
+export type TAlbumCategory = {
   id: string;
   title: string;
   albums: TAlbum[];
 };
 
-export const AlbumCategory: FC<TProps> = ({ title, albums }) => {
+export const AlbumCategory: FC<TAlbumCategory> = ({ title, albums }) => {
+  console.log('__________________________________________');
+  console.log(albums);
   return (
     <SAlbumCategoryContainer>
       <STitle>{title}</STitle>

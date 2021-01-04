@@ -3,8 +3,6 @@ import React, { FC } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 
-const DefaultImage = require('../assets/images/album-cover-1.jpg');
-
 type TProps = {
   id: string;
   imageUri: string;
@@ -13,7 +11,7 @@ type TProps = {
 
 export const Album: FC<Partial<TProps>> = ({
   id,
-  imageUri = DefaultImage,
+  imageUri,
   artistsHeadline = 'Mumford & Sons, X Ambassadors, and more',
 }) => {
   const navigation = useNavigation();
@@ -25,7 +23,12 @@ export const Album: FC<Partial<TProps>> = ({
   return (
     <STouchableContainer onPress={onPress}>
       <SAlbumContainer>
-        <Image style={styles.backgroundImage} source={DefaultImage} />
+        <Image
+          style={styles.backgroundImage}
+          source={{
+            uri: imageUri,
+          }}
+        />
         <SAlbumText numberOfLines={2}>{artistsHeadline}</SAlbumText>
       </SAlbumContainer>
     </STouchableContainer>

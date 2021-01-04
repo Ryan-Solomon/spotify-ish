@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { AlbumCategory } from '../components/AlbumCategory';
+import { AlbumCategory, TAlbumCategory } from '../components/AlbumCategory';
 import albumData from '../assets/data/albumCategories';
 import { FlatList } from 'react-native';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listAlbumCategorys } from '../graphql/queries';
+import { TAlbum } from '../types';
 
 export default function HomeScreen() {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<TAlbumCategory[]>([]);
   useEffect(() => {
     const fetchAlbumCategories = async () => {
       try {
@@ -15,8 +16,8 @@ export default function HomeScreen() {
         const { data } = await API.graphql(
           graphqlOperation(listAlbumCategorys)
         );
-        setCategories(data.listAlbumCategorys.items);
-        console.log(data.listAlbumCategorys.items);
+        setCategories(data.listAlbumCategorys.items as TAlbumCategory[]);
+        // console.log(data.listAlbumCategorys.items);
       } catch {}
     };
     fetchAlbumCategories();
@@ -27,7 +28,6 @@ export default function HomeScreen() {
       {categories?.length > 0 && (
         <FlatList
           data={categories}
-          // @ts-ignore
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
             const { id, title, albums } = item;
