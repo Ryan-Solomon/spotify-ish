@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { API_KEY } from 'react-native-dotenv';
+// @ts-ignore
+import { API_KEY } from '@env';
 
 type TSearchedSong = {
   idTrack: string;
@@ -14,18 +15,20 @@ type TSearchedSong = {
   strTrackThumb: string;
 };
 
-type status = 'IDLE' | 'FULFILLED' | 'PENDING' | 'REJECTED';
+type TStatus = 'IDLE' | 'FULFILLED' | 'PENDING' | 'REJECTED';
 
 export default function TabTwoScreen() {
   const [textInput, setTextInput] = useState('');
   const [searchedSong, setSearchSong] = useState<TSearchedSong | null>(null);
   const [searchText, setSearchText] = useState('');
+  const [status, setStatus] = useState<TStatus>('IDLE');
 
   useEffect(() => {
     const searchSong = async () => {
+      setStatus('PENDING');
       try {
-        const data = fetch(
-          'https://theaudiodb.p.rapidapi.com/searchtrack.php?s=coldplay&t=yellow',
+        const res = await fetch(
+          `https://theaudiodb.p.rapidapi.com/searchtrack.php?s=coldplay&t=${searchText.toLowerCase()}`,
           {
             method: 'GET',
             headers: {
@@ -34,14 +37,22 @@ export default function TabTwoScreen() {
             },
           }
         );
-      } catch (E) {}
+        const data = await res.json();
+        if (status === 'IDLE') return;
+        console.log(data);
+      } catch (E) {
+        setStatus('REJECTED');
+      }
     };
     searchSong();
+
+    return () => setStatus('IDLE');
   }, [searchText]);
 
   return (
     <SContainer>
       <STextInput
+        onSubmitEditing={() => setSearchText(textInput)}
         onChangeText={(text) => setTextInput(text)}
         value={textInput}
         selectionColor='#25ff08'
