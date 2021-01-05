@@ -18,9 +18,11 @@ type TSearchedSong = {
 type TStatus = 'IDLE' | 'FULFILLED' | 'PENDING' | 'REJECTED';
 
 export default function TabTwoScreen() {
-  const [textInput, setTextInput] = useState('');
+  const [songName, setSongName] = useState('');
+  const [artistName, setArtistName] = useState('');
+  const [songText, setSongText] = useState('');
+  const [artistText, setArtistText] = useState('');
   const [searchedSong, setSearchSong] = useState<TSearchedSong | null>(null);
-  const [searchText, setSearchText] = useState('');
   const [status, setStatus] = useState<TStatus>('IDLE');
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export default function TabTwoScreen() {
       setStatus('PENDING');
       try {
         const res = await fetch(
-          `https://theaudiodb.p.rapidapi.com/searchtrack.php?s=coldplay&t=${searchText.toLowerCase()}`,
+          `https://theaudiodb.p.rapidapi.com/searchtrack.php?s=${artistName.toLowerCase()}&t=${songName.toLowerCase()}`,
           {
             method: 'GET',
             headers: {
@@ -39,22 +41,40 @@ export default function TabTwoScreen() {
         );
         const data = await res.json();
         if (status === 'IDLE') return;
+
         console.log(data);
       } catch (E) {
         setStatus('REJECTED');
       }
+      setSongText('');
+      setArtistText('');
     };
     searchSong();
 
     return () => setStatus('IDLE');
-  }, [searchText]);
+  }, [songName, artistName]);
+
+  const updateSearchTerms = () => {
+    setSongName(songText);
+    setArtistName(artistText);
+  };
 
   return (
     <SContainer>
       <STextInput
-        onSubmitEditing={() => setSearchText(textInput)}
-        onChangeText={(text) => setTextInput(text)}
-        value={textInput}
+        onChangeText={(text) => setArtistText(text)}
+        value={artistText}
+        selectionColor='#25ff08'
+        enablesReturnKeyAutomatically={true}
+        clearTextOnFocus={true}
+        blurOnSubmit={true}
+        autoCorrect={false}
+        placeholder='Artist Name'
+      />
+      <STextInput
+        onSubmitEditing={updateSearchTerms}
+        onChangeText={(text) => setSongText(text)}
+        value={songText}
         selectionColor='#25ff08'
         enablesReturnKeyAutomatically={true}
         clearTextOnFocus={true}
