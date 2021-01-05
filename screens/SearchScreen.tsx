@@ -1,10 +1,20 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
 
 export default function TabTwoScreen() {
+  const [textInput, setTextInput] = useState('');
   return (
     <SContainer>
-      <STextInput placeholder='Search for a song' />
+      <STextInput
+        onChangeText={(text) => setTextInput(text)}
+        value={textInput}
+        selectionColor='#25ff08'
+        enablesReturnKeyAutomatically={true}
+        clearTextOnFocus={true}
+        blurOnSubmit={true}
+        autoCorrect={false}
+        placeholder='Search for a song'
+      />
     </SContainer>
   );
 }
