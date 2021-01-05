@@ -3,8 +3,9 @@ import styled from 'styled-components/native';
 // @ts-ignore
 import { API_KEY } from '@env';
 import { SearchInput } from '../components/SerachInput';
+import { SearchedSong } from '../components/SearchedSong';
 
-type TSearchedSong = {
+export type TSearchedSong = {
   idTrack: string;
   intTotalPlays: number;
   strAlbum: string;
@@ -59,7 +60,7 @@ export default function TabTwoScreen() {
   if (status === 'REJECTED') return <SText>Something went wrong.</SText>;
 
   if (searchedSong) {
-    return <SText>{searchedSong.strTrack}</SText>;
+    return <SearchedSong song={searchedSong} />;
   }
 
   return (
