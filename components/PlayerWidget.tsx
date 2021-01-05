@@ -27,6 +27,11 @@ export const PlayerWidget = () => {
   const [duration, setDuration] = useState<number | null>(null);
   const [position, setPosition] = useState<number | null>(null);
 
+  const onPlaybackStatusUpdate = (status: any) => {
+    setDuration(status.durationMillis);
+    setPosition(status.positionMillis);
+  };
+
   const playCurrentSong = async () => {
     if (sound) {
       await sound.unloadAsync();
@@ -47,11 +52,6 @@ export const PlayerWidget = () => {
   if (!currentSong) return null;
 
   const { id, imageUri, uri, title, artist } = currentSong;
-
-  const onPlaybackStatusUpdate = (status: any) => {
-    setDuration(status.durationMillis);
-    setPosition(status.positionMillis);
-  };
 
   const onPlayPausePress = async () => {
     if (!sound) return;

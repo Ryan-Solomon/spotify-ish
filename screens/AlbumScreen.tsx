@@ -58,8 +58,10 @@ export const AlbumScreen = () => {
         renderItem={({ item }) => {
           return <SongItem song={item} />;
         }}
-        // @ts-ignore
-        ListHeaderComponent={() => <AlbumHeader album={album} />}
+        ListHeaderComponent={() => (
+          // @ts-ignore
+          <AlbumHeader firstSong={songs[0]} album={album} />
+        )}
       />
     </SContainer>
   );

@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
+import { useAppContext } from '../context/appContext';
+import { TSong } from '../types';
 
 export type TAlbum = {
   album: {
@@ -10,11 +12,14 @@ export type TAlbum = {
     name: string;
     numberOfLikes: string;
   };
+  firstSong: TSong;
 };
 
 export const AlbumHeader: FC<TAlbum> = ({
   album: { by, id, imageUri, name, numberOfLikes },
+  firstSong,
 }) => {
+  const { setCurrentSong } = useAppContext();
   return (
     <SAlbumHeaderContainer>
       <Image source={{ uri: imageUri }} style={styles.image} />
@@ -23,7 +28,9 @@ export const AlbumHeader: FC<TAlbum> = ({
         By {by} {numberOfLikes} likes
       </SText>
       <SBtn>
-        <SText fontSize='16px'>PLAY</SText>
+        <SPlayBtn onPress={() => setCurrentSong(firstSong)}>
+          <SText fontSize='16px'>PLAY</SText>
+        </SPlayBtn>
       </SBtn>
     </SAlbumHeaderContainer>
   );
@@ -64,3 +71,5 @@ const SBtn = styled.TouchableOpacity`
   align-items: center;
   margin-top: 10px;
 `;
+
+const SPlayBtn = styled.TouchableOpacity``;
