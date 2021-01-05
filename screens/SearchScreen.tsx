@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 // @ts-ignore
 import { API_KEY } from '@env';
+import { SearchInput } from '../components/SerachInput';
 
 type TSearchedSong = {
   idTrack: string;
@@ -20,12 +21,11 @@ type TStatus = 'IDLE' | 'FULFILLED' | 'PENDING' | 'REJECTED';
 export default function TabTwoScreen() {
   const [songName, setSongName] = useState('');
   const [artistName, setArtistName] = useState('');
-  const [songText, setSongText] = useState('');
-  const [artistText, setArtistText] = useState('');
   const [searchedSong, setSearchSong] = useState<TSearchedSong | null>(null);
   const [status, setStatus] = useState<TStatus>('IDLE');
 
   useEffect(() => {
+    if (!songName || !artistName) return;
     const searchSong = async () => {
       setStatus('PENDING');
       try {
@@ -46,42 +46,30 @@ export default function TabTwoScreen() {
       } catch (E) {
         setStatus('REJECTED');
       }
-      setSongText('');
-      setArtistText('');
+      setSongName('');
+      setArtistName('');
     };
     searchSong();
 
     return () => setStatus('IDLE');
   }, [songName, artistName]);
 
-  const updateSearchTerms = () => {
-    setSongName(songText);
-    setArtistName(artistText);
-  };
-
   return (
     <SContainer>
-      <STextInput
-        onChangeText={(text) => setArtistText(text)}
-        value={artistText}
-        selectionColor='#25ff08'
-        enablesReturnKeyAutomatically={true}
-        clearTextOnFocus={true}
-        blurOnSubmit={true}
-        autoCorrect={false}
-        placeholder='Artist Name'
-      />
-      <STextInput
-        onSubmitEditing={updateSearchTerms}
-        onChangeText={(text) => setSongText(text)}
-        value={songText}
-        selectionColor='#25ff08'
-        enablesReturnKeyAutomatically={true}
-        clearTextOnFocus={true}
-        blurOnSubmit={true}
-        autoCorrect={false}
-        placeholder='Search a song'
-      />
+      {artistName ? null : (
+        <SearchInput
+          onSubmitFn={setArtistName}
+          placeholder='Artist Name'
+          headerText='What artist would you like to search?'
+        />
+      )}
+      {artistName && (
+        <SearchInput
+          onSubmitFn={setSongName}
+          placeholder='Song Name'
+          headerText='What song would you like to search?'
+        />
+      )}
     </SContainer>
   );
 }
@@ -89,6 +77,8 @@ export default function TabTwoScreen() {
 const SContainer = styled.View`
   align-items: center;
   padding: 3px;
+  height: 30%;
+  justify-content: space-evenly;
 `;
 
 const SText = styled.Text`
