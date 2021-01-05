@@ -2,24 +2,29 @@ import React, { FC } from 'react';
 import styled from 'styled-components/native';
 import { TSong } from '../types';
 import { Image, ImageSourcePropType, StyleSheet } from 'react-native';
+import { useAppContext } from '../context/appContext';
 
 type TProps = {
   song: TSong;
 };
 
-export const SongItem: FC<TProps> = ({ song: { imageUri, artist, title } }) => {
+export const SongItem: FC<TProps> = ({ song }) => {
+  const { imageUri, artist, title } = song;
+  const { setCurrentSong } = useAppContext();
   return (
-    <SContainer>
-      <SImageContainer>
-        <Image style={styles.image} source={{ uri: imageUri }} />
-      </SImageContainer>
-      <STextContainer>
-        <SText fontSize='18px'>{title}</SText>
-        <SText fontColor='#dadada' fontSize='12px'>
-          {artist}
-        </SText>
-      </STextContainer>
-    </SContainer>
+    <STouchableOpacity onPress={() => setCurrentSong(song)}>
+      <SContainer>
+        <SImageContainer>
+          <Image style={styles.image} source={{ uri: imageUri }} />
+        </SImageContainer>
+        <STextContainer>
+          <SText fontSize='18px'>{title}</SText>
+          <SText fontColor='#dadada' fontSize='12px'>
+            {artist}
+          </SText>
+        </STextContainer>
+      </SContainer>
+    </STouchableOpacity>
   );
 };
 
@@ -54,3 +59,5 @@ const SText = styled.Text<Partial<STextProps>>`
   color: ${({ fontColor }) => fontColor || 'white'};
   margin: 3px 0;
 `;
+
+const STouchableOpacity = styled.TouchableOpacity``;

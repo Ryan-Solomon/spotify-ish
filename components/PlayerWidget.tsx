@@ -8,6 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 
 import { Audio } from 'expo-av';
 import { Sound } from 'expo-av/build/Audio';
+import { useAppContext } from '../context/appContext';
 
 const song = {
   id: '1',
@@ -20,16 +21,11 @@ const song = {
 };
 
 export const PlayerWidget = () => {
+  const { setCurrentSong, currentSong } = useAppContext();
   const [sound, setSound] = useState<Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [duration, setDuration] = useState<number | null>(null);
   const [position, setPosition] = useState<number | null>(null);
-  const { id, imageUri, uri, title, artist } = song;
-
-  const onPlaybackStatusUpdate = (status: any) => {
-    setDuration(status.durationMillis);
-    setPosition(status.positionMillis);
-  };
 
   const playCurrentSong = async () => {
     if (sound) {
@@ -46,7 +42,16 @@ export const PlayerWidget = () => {
 
   useEffect(() => {
     playCurrentSong();
-  }, []);
+  }, [currentSong]);
+
+  if (!currentSong) return null;
+
+  const { id, imageUri, uri, title, artist } = currentSong;
+
+  const onPlaybackStatusUpdate = (status: any) => {
+    setDuration(status.durationMillis);
+    setPosition(status.positionMillis);
+  };
 
   const onPlayPausePress = async () => {
     if (!sound) return;
