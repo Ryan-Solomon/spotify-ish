@@ -24,7 +24,10 @@ export const SearchInput: FC<TProps> = ({
         blurOnSubmit={true}
         autoCorrect={false}
         placeholder={placeholder}
-        onSubmitEditing={() => onSubmitFn(text)}
+        onSubmitEditing={() => {
+          onSubmitFn(text);
+          setText('');
+        }}
       />
     </>
   );

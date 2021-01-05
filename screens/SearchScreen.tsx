@@ -19,9 +19,9 @@ type TSearchedSong = {
 type TStatus = 'IDLE' | 'FULFILLED' | 'PENDING' | 'REJECTED';
 
 export default function TabTwoScreen() {
-  const [songName, setSongName] = useState('');
-  const [artistName, setArtistName] = useState('');
-  const [searchedSong, setSearchSong] = useState<TSearchedSong | null>(null);
+  const [songName, setSongName] = useState<null | string>(null);
+  const [artistName, setArtistName] = useState<null | string>(null);
+  const [searchedSong, setSearchedSong] = useState<TSearchedSong | null>(null);
   const [status, setStatus] = useState<TStatus>('IDLE');
 
   useEffect(() => {
@@ -40,19 +40,27 @@ export default function TabTwoScreen() {
           }
         );
         const data = await res.json();
-        if (status === 'IDLE') return;
-
-        console.log(data);
+        if (data.track === null) {
+          setStatus('REJECTED');
+          return;
+        }
+        setSearchedSong(data.track[0]);
+        setStatus('FULFILLED');
       } catch (E) {
         setStatus('REJECTED');
       }
-      setSongName('');
-      setArtistName('');
+      setSongName(null);
+      setArtistName(null);
     };
     searchSong();
+  }, [songName, setArtistName]);
 
-    return () => setStatus('IDLE');
-  }, [songName, artistName]);
+  if (status === 'PENDING') return <SText>Getting Song..</SText>;
+  if (status === 'REJECTED') return <SText>Something went wrong.</SText>;
+
+  if (searchedSong) {
+    return <SText>{searchedSong.strTrack}</SText>;
+  }
 
   return (
     <SContainer>
