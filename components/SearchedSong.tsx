@@ -1,23 +1,28 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components/native';
 import { TSearchedSong } from '../screens/SearchScreen';
 import { Image, StyleSheet } from 'react-native';
+import { SearchedSongDetails } from './SearchedSongDetails';
 
 type TProps = {
   song: TSearchedSong;
   resetSong: () => void;
 };
 
-export const SearchedSong: FC<TProps> = ({
-  song: { strTrack, strTrackThumb, strAlbum },
-  resetSong,
-}) => {
+export const SearchedSong: FC<TProps> = ({ song, resetSong }) => {
+  const { strTrack, strTrackThumb, strAlbum } = song;
+  const [showDetails, setShowDetails] = useState(false);
+
+  if (showDetails) {
+    return <SearchedSongDetails song={song} />;
+  }
+
   return (
     <SContainer>
       <SText fontSize='28px'>{strTrack}</SText>
       <Image style={styles.image} source={{ uri: strTrackThumb }} />
       <SBtnContainer>
-        <SBtn>
+        <SBtn onPress={() => setShowDetails(true)}>
           <SText>Show Song</SText>
           <SText>Details</SText>
         </SBtn>
