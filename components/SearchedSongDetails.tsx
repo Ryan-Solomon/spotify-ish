@@ -5,9 +5,15 @@ import { TSearchedSong } from '../screens/SearchScreen';
 
 type TProps = {
   song: TSearchedSong;
+  showDetailsCB: () => void;
+  resetSong: () => void;
 };
 
-export const SearchedSongDetails: FC<TProps> = ({ song }) => {
+export const SearchedSongDetails: FC<TProps> = ({
+  song,
+  showDetailsCB,
+  resetSong,
+}) => {
   const {
     strAlbum,
     strGenre,
@@ -32,6 +38,16 @@ export const SearchedSongDetails: FC<TProps> = ({ song }) => {
         <SText fontSize='22px'>Description</SText>
         <SText fontColor='#d5d3d3'>{strDescriptionEN}</SText>
       </SDescContainer>
+      <SBtnContainer>
+        <SBtn onPress={showDetailsCB}>
+          <SText fontSize='12px'>Previous</SText>
+          <SText fontSize='12px'>Page</SText>
+        </SBtn>
+        <SBtn onPress={resetSong}>
+          <SText fontSize='12px'>Search More</SText>
+          <SText fontSize='12px'>Songs</SText>
+        </SBtn>
+      </SBtnContainer>
     </SContainer>
   );
 };
@@ -55,3 +71,20 @@ const SText = styled.Text<Partial<TextProps>>`
 
 const SDetailsContainer = styled.View``;
 const SDescContainer = styled.View``;
+
+const SBtn = styled.TouchableOpacity`
+  border: 1px solid white;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+`;
+
+const SBtnContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 15px;
+  align-self: center;
+`;
