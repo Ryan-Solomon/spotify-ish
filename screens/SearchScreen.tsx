@@ -41,6 +41,9 @@ export default function TabTwoScreen() {
           }
         );
         const data = await res.json();
+        console.log(artistName);
+        console.log(songName);
+        console.log(data);
         if (data.track === null) {
           setStatus('REJECTED');
           return;
@@ -56,11 +59,15 @@ export default function TabTwoScreen() {
     searchSong();
   }, [songName, setArtistName]);
 
+  const resetSong = () => {
+    setSearchedSong(null);
+  };
+
   if (status === 'PENDING') return <SText>Getting Song..</SText>;
   if (status === 'REJECTED') return <SText>Something went wrong.</SText>;
 
   if (searchedSong) {
-    return <SearchedSong song={searchedSong} />;
+    return <SearchedSong resetSong={resetSong} song={searchedSong} />;
   }
 
   return (
