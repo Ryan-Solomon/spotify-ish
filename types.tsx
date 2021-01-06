@@ -16,7 +16,10 @@ export type TabOneParamList = {
 };
 
 export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+  SearchScreen: undefined;
+};
+export type TabThreeParamList = {
+  LibraryScreen: undefined;
 };
 
 export type TAlbum = {

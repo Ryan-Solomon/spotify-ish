@@ -1,10 +1,4 @@
-import {
-  Entypo,
-  EvilIcons,
-  FontAwesome5,
-  Ionicons,
-  MaterialIcons,
-} from '@expo/vector-icons';
+import { Entypo, EvilIcons, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
@@ -14,7 +8,13 @@ import useColorScheme from '../hooks/useColorScheme';
 import { AlbumScreen } from '../screens/AlbumScreen';
 import HomeScreen from '../screens/HomeScreen';
 import SearchScreen from '../screens/SearchScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import {
+  BottomTabParamList,
+  TabOneParamList,
+  TabThreeParamList,
+  TabTwoParamList,
+} from '../types';
+import { LibraryScreen } from './../screens/LibraryScreen';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -56,7 +56,7 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name='Your Library'
-        component={TabTwoNavigator}
+        component={TabThreeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialIcons
@@ -97,10 +97,24 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name='TabTwoScreen'
+        name='SearchScreen'
         component={SearchScreen}
         options={{ headerTitle: 'Search' }}
       />
     </TabTwoStack.Navigator>
+  );
+}
+
+const TabThreeStack = createStackNavigator<TabThreeParamList>();
+
+function TabThreeNavigator() {
+  return (
+    <TabThreeStack.Navigator>
+      <TabThreeStack.Screen
+        name='LibraryScreen'
+        component={LibraryScreen}
+        options={{ headerTitle: 'Song Library' }}
+      />
+    </TabThreeStack.Navigator>
   );
 }
