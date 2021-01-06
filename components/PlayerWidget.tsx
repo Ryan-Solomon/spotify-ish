@@ -10,18 +10,9 @@ import { Audio } from 'expo-av';
 import { Sound } from 'expo-av/build/Audio';
 import { useAppContext } from '../context/appContext';
 
-const song = {
-  id: '1',
-  imageUri:
-    'https://spotify-app-songs.s3.amazonaws.com/hao-wang-pVq6YhmDPtk-unsplash.jpg',
-  uri:
-    'https://spotify-app-songs.s3.amazonaws.com/Black_Ant_-_01_-_Fater_Lee.mp3',
-  title: 'some title',
-  artist: 'some artist',
-};
-
 export const PlayerWidget = () => {
   const { setCurrentSong, currentSong } = useAppContext();
+  const [isLiked, setIsLiked] = React.useState(false);
   const [sound, setSound] = useState<Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [duration, setDuration] = useState<number | null>(null);
@@ -82,7 +73,13 @@ export const PlayerWidget = () => {
         </SText>
       </STextContainer>
       <SIconContainer>
-        <AntDesign name='hearto' size={30} color='white' />
+        <SIconWrapper onPress={() => setIsLiked(!isLiked)}>
+          <AntDesign
+            name={isLiked ? 'heart' : 'hearto'}
+            size={30}
+            color='white'
+          />
+        </SIconWrapper>
         <STouchableOpacity onPress={onPlayPausePress}>
           {isPlaying ? (
             <AntDesign name='pause' size={30} color='white' />
@@ -119,6 +116,10 @@ const SContainer = styled.View`
 
 const STouchableOpacity = styled.TouchableOpacity``;
 
+const SIconWrapper = styled.TouchableOpacity`
+  margin-right: 10px;
+`;
+
 const SIconContainer = styled.View`
   flex-direction: row;
   margin-left: auto;
@@ -126,6 +127,7 @@ const SIconContainer = styled.View`
   padding: 5px;
   justify-content: space-between;
   width: 90px;
+  align-items: center;
 `;
 
 const SImageContainer = styled.View`
