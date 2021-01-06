@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { AlbumCategory, TAlbumCategory } from '../components/AlbumCategory';
-import albumData from '../assets/data/albumCategories';
 import { FlatList } from 'react-native';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listAlbumCategorys } from '../graphql/queries';
-import { TAlbum } from '../types';
 
 export default function HomeScreen() {
   const [categories, setCategories] = useState<TAlbumCategory[]>([]);
