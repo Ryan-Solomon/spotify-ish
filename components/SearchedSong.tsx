@@ -10,11 +10,21 @@ type TProps = {
 };
 
 export const SearchedSong: FC<TProps> = ({ song, resetSong }) => {
-  const { strTrack, strTrackThumb, strAlbum } = song;
+  const { strTrack, strTrackThumb } = song;
   const [showDetails, setShowDetails] = useState(false);
 
+  const showDetailsCB = () => {
+    setShowDetails(false);
+  };
+
   if (showDetails) {
-    return <SearchedSongDetails song={song} />;
+    return (
+      <SearchedSongDetails
+        resetSong={resetSong}
+        showDetailsCB={showDetailsCB}
+        song={song}
+      />
+    );
   }
 
   return (

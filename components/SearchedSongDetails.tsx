@@ -56,6 +56,7 @@ const SContainer = styled.View`
   flex: 1;
   justify-content: space-evenly;
   padding: 30px;
+  padding-bottom: 10px;
 `;
 
 type TextProps = {
@@ -69,7 +70,9 @@ const SText = styled.Text<Partial<TextProps>>`
   margin-bottom: 3px;
 `;
 
-const SDetailsContainer = styled.View``;
+const SDetailsContainer = styled.View`
+  margin-bottom: 10px;
+`;
 const SDescContainer = styled.View``;
 
 const SBtn = styled.TouchableOpacity`
