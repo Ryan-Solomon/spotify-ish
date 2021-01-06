@@ -68,20 +68,6 @@ export default function BottomTabNavigator() {
           ),
         }}
       />
-      <BottomTab.Screen
-        name='Spotify'
-        component={TabTwoNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <FontAwesome5
-              name='spotify'
-              size={30}
-              style={{ marginBottom: -3 }}
-              color={color}
-            />
-          ),
-        }}
-      />
     </BottomTab.Navigator>
   );
 }
