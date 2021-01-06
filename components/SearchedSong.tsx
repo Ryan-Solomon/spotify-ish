@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import { TSearchedSong } from '../screens/SearchScreen';
 import { Image, StyleSheet } from 'react-native';
 import { SearchedSongDetails } from './SearchedSongDetails';
+import { useAppContext } from '../context/appContext';
 
 type TProps = {
   song: TSearchedSong;
@@ -12,6 +13,7 @@ type TProps = {
 export const SearchedSong: FC<TProps> = ({ song, resetSong }) => {
   const { strTrack, strTrackThumb } = song;
   const [showDetails, setShowDetails] = useState(false);
+  const { currentSong } = useAppContext();
 
   const showDetailsCB = () => {
     setShowDetails(false);
@@ -28,7 +30,7 @@ export const SearchedSong: FC<TProps> = ({ song, resetSong }) => {
   }
 
   return (
-    <SContainer>
+    <SContainer height={currentSong ? '90%' : '100%'}>
       <SText fontSize='28px'>{strTrack}</SText>
       <Image style={styles.image} source={{ uri: strTrackThumb }} />
       <SBtnContainer>
@@ -53,11 +55,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const SContainer = styled.View`
+type SContainerProps = {
+  height: string;
+};
+
+const SContainer = styled.View<SContainerProps>`
   padding: 8px;
   justify-content: space-evenly;
   align-items: center;
-  flex: 1;
+  height: ${({ height }) => height};
 `;
 
 type TextProps = {

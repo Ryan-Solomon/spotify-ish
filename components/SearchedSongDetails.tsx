@@ -1,6 +1,7 @@
 import React from 'react';
 import { FC } from 'react';
 import styled from 'styled-components/native';
+import { useAppContext } from '../context/appContext';
 import { TSearchedSong } from '../screens/SearchScreen';
 
 type TProps = {
@@ -23,10 +24,11 @@ export const SearchedSongDetails: FC<TProps> = ({
     intTotalPlays,
     strArtist,
   } = song;
+  const { currentSong } = useAppContext();
   return (
     <SContainer>
       <SDetailsContainer>
-        <SText fontSize='22px'>Song Details</SText>
+        <SText fontSize='20px'>Song Details</SText>
         <SText fontColor='#d5d3d3'>Album: {strAlbum}</SText>
         <SText fontColor='#d5d3d3'>Track: {strTrack}</SText>
         <SText fontColor='#d5d3d3'>Artist: {strArtist}</SText>
@@ -35,17 +37,17 @@ export const SearchedSongDetails: FC<TProps> = ({
         <SText fontColor='#d5d3d3'>Plays: {intTotalPlays}</SText>
       </SDetailsContainer>
       <SDescContainer>
-        <SText fontSize='22px'>Description</SText>
+        <SText fontSize='20px'>Description</SText>
         <SText fontColor='#d5d3d3'>{strDescriptionEN}</SText>
       </SDescContainer>
       <SBtnContainer>
         <SBtn onPress={showDetailsCB}>
-          <SText fontSize='12px'>Previous</SText>
-          <SText fontSize='12px'>Page</SText>
+          <SText fontSize='10px'>Previous</SText>
+          <SText fontSize='10px'>Page</SText>
         </SBtn>
         <SBtn onPress={resetSong}>
-          <SText fontSize='12px'>Search More</SText>
-          <SText fontSize='12px'>Songs</SText>
+          <SText fontSize='10px'>Search More</SText>
+          <SText fontSize='10px'>Songs</SText>
         </SBtn>
       </SBtnContainer>
     </SContainer>
@@ -53,7 +55,7 @@ export const SearchedSongDetails: FC<TProps> = ({
 };
 
 const SContainer = styled.View`
-  flex: 1;
+  height: 88%;
   justify-content: space-evenly;
   padding: 30px;
   padding-bottom: 10px;
@@ -81,13 +83,18 @@ const SBtn = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   width: 100px;
+  margin: 10px;
 `;
 
 const SBtnContainer = styled.View`
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   margin-top: 15px;
   align-self: center;
+  position: absolute;
+  right: 0;
+  left: 150;
+  bottom: 400;
 `;

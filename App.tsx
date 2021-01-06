@@ -31,3 +31,7 @@ export default function App() {
     );
   }
 }
+
+// Fix the way a searched song looks with player widget showing
+// Add gesture thing with "can it be done in react native"
+// Publish to explo and record a demo

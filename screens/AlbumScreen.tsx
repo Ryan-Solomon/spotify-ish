@@ -38,7 +38,7 @@ export const AlbumScreen = () => {
         setStatus('FULFILLED');
         setSongs(songData.data.getAlbum.songs.items as TSong[]);
         setAlbum(songData.data.getAlbum as TAlbum);
-      } catch (e) {
+      } catch {
         setStatus('ERROR');
       }
     };
